@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Category - " + @ViewBag.CategoryInfo.Name;
+}
+@model Category
+<a href="/">Back</a>
+<h4>Category | @ViewBag.CategoryInfo.Name</h4>
+
+<h5>Products:</h5>
+@foreach(var product in @ViewBag.CategoryInfo.categoryAssociations)
+{
+    <p> - @product.Product.Name | @product.Product.Description </p>
+}
+
+<hr>
+Add Products:
+<form asp-action="AddProductToCategory" asp-controller="Category" method="post">
+    <select name="ProductId">
+    @foreach (var product in ViewBag._products)
+    {
+        <option value = "@product.ProductId">@product.Name</option>
+    }
+    </select>
+    <input type="hidden" value="@ViewBag.CategoryInfo.CategoryId" name="CategoryId">
+    <input type="submit" value="Add Product">
+</form>
